@@ -1,24 +1,32 @@
-import logo from './logo.svg';
 import './App.css';
+import { useReducer } from 'react';
+import { fileSystemReducer, initialState } from './state/fileSystemReducer';
+import FileTree from './components/FileTree';
+import FileContent from './components/FileContent';
+import Toolbar from './components/Toolbar';
+import InitialTree from '../data/initialTree.json';
+
 
 function App() {
+  const [state, dispatch] = useReducer(fileSystemReducer, initialState);
+  console.log(InitialTree);
+
+  if(!state || !state.tree) return <div>Loading...</div>;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <>
+    <div className="app-shell">
+      <Toolbar state={state} dispatch={dispatch} />
+      <div className="main">
+        <aside className="sidebar">
+          <FileTree nodes={state.tree} dispatch={dispatch} selectedId={state.selectedId} />
+        </aside>
+        <section className="content">
+          <FileContent tree={state.tree} selectedId={state.selectedId} dispatch={dispatch} />
+        </section>
+      </div>
     </div>
+    </>
   );
 }
 

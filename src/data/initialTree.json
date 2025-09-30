@@ -1,0 +1,50 @@
+[
+    {
+        "id": "root",
+        "name" : "root",
+        "type": "folder",
+        "isExpanded": true,
+        "children": [
+            {
+                "id": "folder-1",
+                "name" : "src",
+                "type": "folder",
+                "isExpanded": true,
+                "children": [
+                    {
+                        "id": "file-1",
+                        "name" : "index.js",
+                        "type": "file", 
+                        "content": "console.log('Hello, World!');"
+                    },
+                    {
+                        "id": "file-2",
+                        "name" : "App.js",
+                        "type": "file",
+                        "content": "export default function App()"
+                    }
+                ]
+            },
+            {
+                "id": "folder-2",
+                "name" : "public",
+                "type": "folder",
+                "isExpanded": false,
+                "children": [
+                    {
+                        "id": "file-3",
+                        "name" : "index.html",
+                        "type": "file",
+                        "content": "<!-- index.html -->"
+                    }
+                ]
+            },
+            {
+                "id": "file-4",
+                "name" : "README.md",
+                "type": "file",
+                "content": "# Project Readme"
+            }
+        ]
+    }
+]
