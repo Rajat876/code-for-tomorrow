@@ -4,12 +4,10 @@ import { fileSystemReducer, initialState } from './state/fileSystemReducer';
 import FileTree from './components/FileTree';
 import FileContent from './components/FileContent';
 import Toolbar from './components/Toolbar';
-import InitialTree from '../data/initialTree.json';
 
 
 function App() {
   const [state, dispatch] = useReducer(fileSystemReducer, initialState);
-  console.log(InitialTree);
 
   if(!state || !state.tree) return <div>Loading...</div>;
 
@@ -26,6 +24,7 @@ function App() {
         </section>
       </div>
     </div>
+
     </>
   );
 }

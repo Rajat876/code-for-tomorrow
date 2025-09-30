@@ -1,4 +1,23 @@
+
 import InitialTree from '../data/initialTree.json';
+// Helper to find and remove a node by id, returning [node, newTree]
+function extractNode(nodes, id) {
+    let found = null;
+    function helper(arr) {
+        return arr.filter(n => {
+            if (n.id === id) {
+                found = n;
+                return false;
+            }
+            if (n.type === 'folder' && n.children) {
+                n.children = helper(n.children);
+            }
+            return true;
+        });
+    }
+    const newTree = helper([...nodes]);
+    return [found, newTree];
+}
 
 export const initialState = {
     tree: InitialTree,
@@ -22,6 +41,19 @@ function removeNode(nodes, idToRemove) {
 
 export function fileSystemReducer(state, action) {
     switch(action.type){
+        case 'MOVE_NODE': {
+            const { draggedId, targetId } = action.payload;
+            if (draggedId === 'root' || draggedId === targetId) return state;
+            // Remove node from tree
+            const [draggedNode, treeWithoutDragged] = extractNode(state.tree, draggedId);
+            if (!draggedNode) return state;
+            // Insert node into target folder
+            const newTree = traverse(treeWithoutDragged, n => n.id === targetId && n.type === 'folder', folder => ({
+                ...folder,
+                children: [...(folder.children || []), draggedNode]
+            }));
+            return { ...state, tree: newTree };
+        }
         case 'SELECT_FILE':
             return {...state, selectedId: action.payload.id, error: null};
         

@@ -6,7 +6,7 @@ export default function FileTree({ nodes, dispatch, selectedId }) {
         <>
         <div>
             {nodes.map(node => (
-                <FileNode />
+                <FileNode key={node.id} node={node} dispatch={dispatch} level={0} selectedId={selectedId} />
             ))}
         </div>
         </>
